@@ -45,7 +45,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'database_cleaner', '~> 1.8'
+  # Add support for rails Rspec
+  gem 'capybara', '~> 3.32'
+  gem 'rails-controller-testing', '~> 1.0'
+  gem 'rspec-rails', '~> 4.0'
+  gem 'selenium-webdriver', '~> 3.142'
+  gem 'shoulda-matchers'
 end
 
 group :development do
