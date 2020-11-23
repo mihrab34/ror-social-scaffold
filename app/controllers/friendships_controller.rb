@@ -2,8 +2,12 @@ class FriendshipsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # @friendships = current_user.friendships
+    @friendship = current_user.friendships
     @requests = current_user.friend_requests
+  end
+
+  def show
+    @friendship
   end
 
   def create
@@ -19,21 +23,19 @@ class FriendshipsController < ApplicationController
     @user = User.find_by(id: params[:format])
     current_user.confirm_friend(@user)
     flash[:success] = 'Friend Request Accepted'
-    redirect_to friendships_path
+    redirect_to users_path
   end
 
   def reject
     @user = User.find_by(id: params[:format])
     current_user.cancel_request(@user)
     flash[:success] = 'Friend Request Rejected'
-    redirect_to friendships_path
+    redirect_to users_path
   end
 
   def destroy
-    @friend1 = Friendship.where(user_id: params[:format], friend_id: current_user.id)
-    @friend2 = Friendship.where(user_id: current_user.id, friend_id: params[:format])
-    @friend = @friend1 || @friend2
-    flash[:danger] = 'Removed Friend' if @friend.delete_all
+    friend_user_id = params[:id]
+    Friendship.find([current_user.id, friend_user_id]).destroy
     redirect_to users_path
   end
 

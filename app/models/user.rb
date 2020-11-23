@@ -38,6 +38,6 @@ class User < ApplicationRecord
   end
 
   def friend_requests
-    inverted_friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
+    inverted_friendships.map { |friendship| friendship.user unless friendship.confirmed }.compact
   end
 end

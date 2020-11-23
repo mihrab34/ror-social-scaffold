@@ -5,5 +5,12 @@
     <ul class="posts">
       <%= render @posts %>
     </ul>
+    <h3><%= link_to 'You Are Friends With:', '#' %></h3>
+          <br>
+          <ol>
+            <% @user.friends.each do | friend |%>
+              <li><%= friend.name %></li><hr>
+            <%end%>
+          </ol>
   </article>
 </section>

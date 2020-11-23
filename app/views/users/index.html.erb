@@ -15,13 +15,13 @@
       <% elsif current_user.pending_friend?.include?(user) %>
         <%= link_to "Cancel Friend Request", cancel_request_path(user), 
                                           method: :delete, 
-                                          class: "btn btn-warning"%>
+                                          class: "btn cancel" %><br>
 
       <% elsif current_user.friend_requests.include?(user) %>
         <%= accept_friendship%>       
         <%= reject_friendship %>
       <% else %>
-        <%= form_for(@friendship, url: create_friendship_path(@friendship)) do |f| %>  
+        <%= form_for(:friendship, url: create_friendship_path(@friendship)) do |f| %>  
           <%= f.hidden_field :friend_id, value: user.id  %>
           <%= f.submit "Add As Friend", class: "btn btn-primary" %>
         <% end %>

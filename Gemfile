@@ -36,8 +36,10 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
+gem 'bootstrap', '~> 5.0.0.alpha1'
 gem 'devise'
+gem 'jquery-rails'
+gem 'mini_racer', '~> 0.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
