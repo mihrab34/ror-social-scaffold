@@ -24,14 +24,24 @@ class FriendshipsController < ApplicationController
     redirect_to users_path
   end
 
-  def destroy
-    if params[:id]
-      Friendship.find(params[:id]).destroy
-    else
-      @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: params[:friend_id])
-      @friendship.present?
-      @friendship.destroy_friendship
+  def decline
+    @friendship = Friendship.find_by(user_id: params[:user_id], 
+                  friend_id: current_user.id, confirmed: false)
+    return unless @friendship
+      @friendship&.destroy
+      flash[:success] = ‘Friend Request Declined!’
+      redirect_back(fallback_location: root_path)
     end
-    redirect_back(fallback_location: root_path, alert: 'Friend request declined')
   end
 end
+
+# def destroy
+  #   if params[:id]
+  #     Friendship.find(params[:id]).destroy
+  #   else
+  #     @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: params[:friend_id])
+  #     @friendship.present?
+  #     @friendship&.destroy
+  #   end
+  #   redirect_back(fallback_location: root_path, alert: 'Friend request declined')
+  # end

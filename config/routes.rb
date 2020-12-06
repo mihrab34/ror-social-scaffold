@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   get 'friendships', to: 'friendships#index'
   patch 'friendships', to: 'friendships#accept', as: 'accept'
-  delete 'friendships', to: 'friendships#destroy', as: 'reject'
+  delete 'friendships', to: 'friendships#decline', as: 'reject'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
