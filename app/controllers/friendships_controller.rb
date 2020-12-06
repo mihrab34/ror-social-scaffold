@@ -2,21 +2,19 @@ class FriendshipsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @friendship = current_user.friendships
+    @friendships = current_user.friendships
     @requests = current_user.friend_requests
   end
 
-  def show
-    @friendship
-  end
-
   def create
-    @friendship = current_user.friendships.build(friendship_params)
-    Friendship.create(user_id: current_user.id, friend_id: @friendship.id)
-    return unless @friendship.save
-
-    flash[:success] = 'Friend Request Sent'
-    redirect_to users_path
+    @user = User.find(params[:user_id])
+    @friendship = current_user.friend_sent.build(friend_id: params[:user_id])
+    if @friendship.save
+      flash[:success] = 'Friend Request Sent!'
+    else
+      flash[:danger] = 'Friend Request Failed!'
+    end
+    redirect_back(fallback_location: root_path)
   end
 
   def accept
@@ -26,22 +24,19 @@ class FriendshipsController < ApplicationController
     redirect_to users_path
   end
 
-  def reject
-    @user = User.find_by(id: params[:format])
-    current_user.cancel_request(@user)
-    flash[:success] = 'Friend Request Rejected'
-    redirect_to users_path
-  end
-
   def destroy
-    friend_user_id = params[:id]
-    Friendship.find([current_user.id, friend_user_id]).destroy
-    redirect_to users_path
+    if params[:id]
+      Friendship.find(params[:id]).destroy
+    elsif @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: params[:friend_id])
+      @friendship.present?
+      @friendship.destroy_friendship
+    end
+    redirect_back(fallback_location: root_path, alert: 'Friend request declined')
   end
 
-  private
+  # private
 
-  def friendship_params
-    params.require(:friendship).permit(:user_id, :friend_id)
-  end
+  # def friendship_params
+    # params.require(:friendship).permit(:user_id, :friend_id)
+  # end
 end

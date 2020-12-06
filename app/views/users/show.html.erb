@@ -1,16 +1,13 @@
 <section class="user-section">
-  <h2><%= "Name: #{@user.name}" %></h2>
+  <h2><%= current_user.name %></h2>
+  <h3>Profile Page:</h3>
+  <button type="button" class="btn">
+    <%= show_friend_btn if @user != current_user %>
+  </button>
   <article class="timeline">
     <h3>Recent posts:</h3>
     <ul class="posts">
       <%= render @posts %>
     </ul>
-    <h3><%= link_to 'You Are Friends With:', '#' %></h3>
-          <br>
-          <ol>
-            <% @user.friends.each do | friend |%>
-              <li><%= friend.name %></li><hr>
-            <%end%>
-          </ol>
   </article>
 </section>

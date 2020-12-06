@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
 
-  has_many :friendships
-  has_many :inverted_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
+  has_many :friendships, dependent: :destroy
+  has_many :inverted_friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
   has_many :friend_requests, through: :inverted_friendships, source: :friend
   has_many :pending_friendships, -> { where(confirmed: false) }, class_name: 'Friendship', foreign_key: 'user_id'
   has_many :confirmed_friendships, -> { where(confirmed: true) }, class_name: 'Friendship', foreign_key: 'friend_id'
@@ -22,9 +22,11 @@ class User < ApplicationRecord
     friends.include?(user)
   end
 
-  def cancel_request(user)
-    friendship = friendships.find { |f| f.friend_id == user.id }
-    friendship.destroy
+  def destroy_friendship
+    friendship = Friendship.where(user_id: user_id, friend_id: friend_id).take
+    inverted_friendships = Friendship.where(user_id: friend_id, friend_id: user_id).take
+    friendship&.delete
+    inverted_friendships&.delete
   end
 
   def confirm_friend(user)
@@ -33,8 +35,8 @@ class User < ApplicationRecord
     friendship.save
   end
 
-  def pending_friend?
-    friendships.map { |friendship| friendship.friend unless friendship.confirmed }.compact
+  def pending_friend?(user)
+    friend_requests.include?(user)
   end
 
   def friend_requests
