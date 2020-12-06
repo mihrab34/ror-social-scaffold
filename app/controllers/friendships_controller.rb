@@ -27,16 +27,11 @@ class FriendshipsController < ApplicationController
   def destroy
     if params[:id]
       Friendship.find(params[:id]).destroy
-    elsif @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: params[:friend_id])
+    else
+      @friendship = Friendship.find_by(user_id: params[:user_id], friend_id: params[:friend_id])
       @friendship.present?
       @friendship.destroy_friendship
     end
     redirect_back(fallback_location: root_path, alert: 'Friend request declined')
   end
-
-  # private
-
-  # def friendship_params
-    # params.require(:friendship).permit(:user_id, :friend_id)
-  # end
 end
