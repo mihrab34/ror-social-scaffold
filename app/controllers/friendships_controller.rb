@@ -8,7 +8,7 @@ class FriendshipsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    @friendship = current_user.friend_sent.build(friend_id: params[:user_id])
+    @friendship = current_user.friendships.build(friend_id: params[:user_id])
     if @friendship.save
       flash[:success] = 'Friend Request Sent!'
     else
@@ -28,14 +28,14 @@ class FriendshipsController < ApplicationController
     @friendship = Friendship.find_by(user_id: params[:user_id], 
                   friend_id: current_user.id, confirmed: false)
     return unless @friendship
-      @friendship&.destroy
-      flash[:success] = ‘Friend Request Declined!’
-      redirect_back(fallback_location: root_path)
-    end
+
+    @friendship&.destroy
+    flash[:success] = 'Friend Request Declined!'
+    redirect_back(fallback_location: root_path)
   end
 end
 
-# def destroy
+  # def destroy
   #   if params[:id]
   #     Friendship.find(params[:id]).destroy
   #   else
