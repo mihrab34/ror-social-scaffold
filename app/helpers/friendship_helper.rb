@@ -4,9 +4,7 @@ module FriendshipHelper
   end
 
   def friend_request(user)
-    if current_user.friends?(user) && !current_user?(user)
-      render partial: 'friend_request', locals: { user: user}
-    end
+    render partial: 'friend_request', locals: { user: user } if current_user.friends?(user) && !current_user?(user)
   end
 
   def current_user?(user)
