@@ -12,10 +12,6 @@ RSpec.describe User, type: :model do
     it { should have_many(:likes) }
     it { should have_many(:friendships) }
     it { should have_many(:inverted_friendships) }
-    it { should have_many(:confirmed_friendships) }
-    it { should have_many(:friends) }
-    it { should have_many(:pending_friendships) }
-    it { should have_many(:friend_requests) }
   end
 
   context 'Validations' do
@@ -39,18 +35,6 @@ RSpec.describe User, type: :model do
       @user1.posts.build(content: 'This is my first post').save
       @user1.comments.create(post_id: 1)
       expect(@user1.comments.first.user_id).to_not(be(nil))
-    end
-  end
-
-  context 'User Interactions with friendship' do
-    scenario 'friend request sent' do
-      @user1.friendships.build(friend: @user2, confirmed: false).save
-      expect(@user2.friend_requests).not_to(be(nil))
-    end
-
-    scenario 'friend request received' do
-      @user1.friendships.build(friend: @user2, confirmed: false).save
-      expect(@user1.friend_requests).to_not(be(nil))
     end
   end
 end

@@ -6,10 +6,8 @@
       <span class="profile-link">
         <%= link_to 'See Profile',  user_path(user), class: 'profile-link' %>
       </span>
-      <button class="frd-rqst">
-        <%= show_friend_btn(user.id) %>
-      </button>
+      <%= friend_request(user) %>
     <% end %>
-    </li><br>
+    </li>
   </ul>
 </section>

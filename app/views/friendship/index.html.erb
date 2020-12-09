@@ -1,16 +1,7 @@
 <div class="container">
-  <h1>Friend Requests</h1>
-  <% unless friendship.confirmed %>
-    <% @friend_requests.each do |friendship| %>
-      <h1><%= "#{friendship.user.name} want to be your friend" %></h1>
-      <div>
-        <button type="button">
-          <%= accept_btn friendship %>
-        </button>
-        <button type="button">
-          <%= reject_btn friendship %>
-        </button>
-      </div>
-    <% end %>
+  <ul>
+  <% @inverted_friendships.reverse.each do |request| %>
+    <%= accept_decline(request)%>
   <% end %>
+  </ul>
 </div>
