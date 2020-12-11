@@ -39,6 +39,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 5.0.0.alpha1'
 gem 'devise'
 gem 'jquery-rails'
+gem 'bourbon', '~> 7.0'
 gem 'mini_racer', '~> 0.3.1'
 
 group :development, :test do

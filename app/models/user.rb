@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
 
   has_many :friendships, foreign_key: 'user_id'
-  has_many :inverted_friendships, class_name: 'Friendship', foreign_key: 'friend_id', dependent: :destroy
+  has_many :inverted_friendships, class_name: 'Friendship', foreign_key: 'friend_id'
 
   def friend_request?(friend)
     friend.friendships.find_by(friend_id: id).nil?
