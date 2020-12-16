@@ -1,5 +1,0 @@
-<div>
-<p>Name:<%= request.user.name %></p>
-<%= button_to 'Accept', user_friendship_path(request.user.id, request.id), method: :put, class: 'btn btn-primary' %>
-<%= button_to 'Decline', user_friendship_path(request.user.id, request.id), method: :delete, class: 'btn btn-primary' %>
-</div>
