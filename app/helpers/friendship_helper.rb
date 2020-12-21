@@ -1,6 +1,6 @@
 module FriendshipHelper
   def accept_decline(request)
-    render partial: 'accept_decline', locals: { request: request } if request.user.confirm_request?(current_user)
+    render partial: 'accept_decline', locals: { request: request } unless request.user.confirmed_request?(current_user)
   end
 
   def friend_request(user)

@@ -21,7 +21,7 @@ class User < ApplicationRecord
     friendships.find_by(friend_id: friend.id).nil? && friend_request?(friend)
   end
 
-  def confirm_request?(friend)
-    !friendships.find_by(friend_id: friend.id, confirmed: false).nil?
+  def confirmed_request?(friend)
+    friendships.find_by(friend_id: friend.id).confirmed == true
   end
 end
