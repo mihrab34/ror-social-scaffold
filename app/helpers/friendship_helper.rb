@@ -1,0 +1,13 @@
+module FriendshipHelper
+  def accept_decline(request)
+    render partial: 'accept_decline', locals: { request: request } unless request.user.confirmed_request?(current_user)
+  end
+
+  def friend_request(user)
+    render partial: 'friend_request', locals: { user: user } if current_user.friends?(user) && !current_user?(user)
+  end
+
+  def current_user?(user)
+    current_user == user
+  end
+end

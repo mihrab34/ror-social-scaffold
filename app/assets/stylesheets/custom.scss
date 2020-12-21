@@ -93,6 +93,10 @@ a {
   background-color: #f6cfc6;
 }
 
+.cancel {
+  background-color: $primary-color-dark;
+}
+
 .errors {
   font-size: 10px;
   color: red;
@@ -157,7 +161,7 @@ form {
     }
 
     input[type="checkbox"] {
-      width: fit-content;
+      width: auto;
     }
   }
 

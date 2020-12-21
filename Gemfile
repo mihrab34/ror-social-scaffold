@@ -36,8 +36,11 @@ gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-
+gem 'bootstrap', '~> 5.0.0.alpha1'
 gem 'devise'
+gem 'jquery-rails'
+gem 'bourbon', '~> 7.0'
+gem 'mini_racer', '~> 0.3.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -45,7 +48,14 @@ group :development, :test do
 end
 
 group :test do
-  gem 'rspec'
+  gem 'database_cleaner', '~> 1.8'
+  # Add support for rails Rspec
+  gem 'capybara', '~> 3.32'
+  gem 'rails-controller-testing', '~> 1.0'
+  gem 'rspec-rails', '~> 4.0'
+  gem 'selenium-webdriver', '~> 3.142'
+  gem 'shoulda-matchers'
+  gem 'webdrivers'
 end
 
 group :development do
@@ -53,9 +63,14 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'rubocop'
+  gem 'rubocop', '~> 1.3', '>= 1.3.1'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+end
+
+group :production do
+  # postgre SQL GEM
+  gem 'rails_12factor'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -1,0 +1,7 @@
+<div class="container">
+  <ul>
+  <% @inverted_friendships.reverse_each do |request| %>
+    <%= accept_decline(request)%>
+  <% end %>
+  </ul>
+</div>

@@ -1,0 +1,40 @@
+require 'rails_helper'
+
+RSpec.describe User, type: :model do
+  before(:each) do
+    @user1 = User.create(name: 'Sender', email: 'sender@example.com', password: 'password')
+    @user2 = User.create(name: 'Reveiver', email: 'receiver@example.com', password: 'password')
+  end
+
+  context 'ActiveRecord Associations' do
+    it { should have_many(:posts) }
+    it { should have_many(:comments) }
+    it { should have_many(:likes) }
+    it { should have_many(:friendships) }
+    it { should have_many(:inverted_friendships) }
+  end
+
+  context 'Validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_length_of(:name).is_at_most(20) }
+  end
+
+  context 'User content creation' do
+    scenario 'user can create posts' do
+      @user1.posts.build(content: 'This is just for a test').save
+      expect(@user1.posts).not_to(be(nil))
+    end
+
+    scenario 'user can like posts' do
+      @user1.posts.build(content: 'This is just for a test').save
+      @user1.likes.create(post_id: 1)
+      expect(@user1.likes.first.user_id).to(be_kind_of(Integer))
+    end
+
+    scenario 'user can comment on posts' do
+      @user1.posts.build(content: 'This is my first post').save
+      @user1.comments.create(post_id: 1)
+      expect(@user1.comments.first.user_id).to_not(be(nil))
+    end
+  end
+end
